@@ -8,13 +8,19 @@ jobs:
   build:
     name: build
     runs-on: ubuntu-latest
+    env:
+      repo_uri: "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
     steps:
       - uses: actions/checkout@master
       - name: get dependencies
         run: yarn
-      - name: test
-        run: echo $PWD
-      - name: test 2
-        run: ls
       - name: build
         run: yarn build
+      - name: push
+        if: success()
+        uses: crazy-max/ghaction-github-pages@master
+        with:
+          target_branch: gh-pages
+          build_dir: public/build
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
