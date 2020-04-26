@@ -12,7 +12,7 @@
 
     function addPerson(name) {
         if (name.length > 0 && persons.indexOf(name) === -1) {
-            personsStorage.update(persons => [...persons, name])
+            personsStorage.update(persons => [name, ...persons])
             person = "";
         }
     }
@@ -23,6 +23,10 @@
 </script>
 
 <form on:submit|preventDefault>
+    <div class="row">
+        <input autofocus type="text" bind:value={person}>
+        <button type="submit" on:click={addPerson(person)}>Add</button>
+    </div>
     {#each persons as person}
         <div class="row">
             <span>{person}</span>
@@ -30,10 +34,7 @@
         </div>
     {/each}
 
-    <div class="row">
-        <input type="text" bind:value={person}>
-        <button on:click={addPerson(person)}>Add</button>
-    </div>
+
 </form>
 
 <style>
