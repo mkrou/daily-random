@@ -9,6 +9,7 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - name: get dependencies
         run: yarn
       - name: test
